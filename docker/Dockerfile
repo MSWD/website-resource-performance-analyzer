@@ -17,6 +17,7 @@ LABEL vendor="Clarivoy" \
       com.clarivoy.image.build_tag="$CI_COMMIT_TAG" \
       com.clarivoy.image.buildstamp="$BUILDSTAMP"
 
+ENV PUPPETEER_SKIP_DOWNLOAD=true
 ENV CI_COMMIT_TAG=${CI_COMMIT_TAG}
 ENV BUILD_REPO_VERSION=${BUILD_REPO_VERSION}
 ENV APP_PATH=/app
@@ -27,14 +28,22 @@ SHELL [ "/bin/bash", "-c" ]
 
 RUN \
   # Install O/S Dependencies needed by project build.
-  apt -y update && apt -y install git curl && \
+  export PUPPETEER_SKIP_DOWNLOAD=true && \
+  apt-get -y update && apt-get -y install gnupg wget git curl && \
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+  sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
+  apt-get -y update && \
+  apt-get --fix-broken install && \
+  apt-get -y install google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei \
+             fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
+             --no-install-recommends && \
   # Add service user
   groupadd -g 9000 service && \
   useradd -g service -u 9000 service -s /bin/bash -d ${APP_PATH}/src && \
   # Install Node Project Dependencies
   cd ${APP_PATH} && if [[ -f package.json ]]; then npm i; fi && \
   # Remove git and APT Cleanup
-  apt -y remove git && apt -y autoremove && \
+  apt-get -y remove git && apt-get -y autoremove && \
   rm -rvf /var/lib/apt/lists/*
 
 WORKDIR ${APP_PATH}/src

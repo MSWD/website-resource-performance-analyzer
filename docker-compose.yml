@@ -12,6 +12,9 @@ services:
         CI_COMMIT_TAG: ${CI_COMMIT_TAG:-manual-build}
       dockerfile: docker/Dockerfile
     image: clarivoy/wsrpa:latest
+    user: 1000:1000
+    cap_add:
+      - SYS_ADMIN
     env_file: .env
     volumes:
       - ./src:/app/src:z

@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/MSWD/website-resource-performance-analyzer/issues"
   },
-  "homepage": "https://github.com/MSWD/website-resource-performance-analyzer#readme"
+  "homepage": "https://github.com/MSWD/website-resource-performance-analyzer#readme",
+  "dependencies": {
+    "pino": "^8.17.2",
+    "puppeteer": "^21.7.0"
+  }
 }
