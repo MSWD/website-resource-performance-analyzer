@@ -1,0 +1,19 @@
+{
+  "name": "wsrpa",
+  "version": "1.0.0",
+  "description": "Web Site Resource Performance Analyzer",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MSWD/website-resource-performance-analyzer.git"
+  },
+  "author": "Kendal Montgomery <kmontgomery@clarivoy.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MSWD/website-resource-performance-analyzer/issues"
+  },
+  "homepage": "https://github.com/MSWD/website-resource-performance-analyzer#readme"
+}

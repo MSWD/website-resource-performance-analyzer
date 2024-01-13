@@ -1,0 +1,24 @@
+---
+version: "3.4"
+
+services:
+  wsrpa:
+    labels:
+      com.clarivoy.service_name: "Web Site Resource Performance Analyzer"
+    build:
+      context: .
+      args:
+        NODE_VERSION_BASE: ${NODE_VERSION_BASE:-21}
+        CI_COMMIT_TAG: ${CI_COMMIT_TAG:-manual-build}
+      dockerfile: docker/Dockerfile
+    image: clarivoy/wsrpa:latest
+    env_file: .env
+    volumes:
+      - ./src:/app/src:z
+    command: [ "-c", "tail -f /dev/null"]
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.255.255.64/28
